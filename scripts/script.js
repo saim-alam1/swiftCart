@@ -157,6 +157,7 @@ const loadAllData = (allData) => {
   const productCardContainer = document.getElementById("product-card");
   productCardContainer.innerHTML = "";
   allData.forEach((product) => {
+    // console.log(product);
     const cardData = document.createElement("div");
     cardData.classList = "card bg-base-100 shadow-sm";
     cardData.innerHTML = `
@@ -185,7 +186,7 @@ const loadAllData = (allData) => {
               <p class="font-bold text-xl">$${product.price}</p>
 
               <div class="mb-5 grid grid-cols-2 gap-4">
-                <button class="btn">
+                <button class="btn" onClick="productDetails(${product.id})">
                   <i class="fa-regular fa-eye"></i> Details
                 </button>
                 <button class="btn btn-primary">
@@ -203,6 +204,25 @@ const loadCategoryData = (category) => {
   fetch(`https://fakestoreapi.com/products/category/${category}`)
     .then((res) => res.json())
     .then((res) => loadAllData(res));
+};
+
+// To Get Single Product Detail By Id
+const productDetails = (id) => {
+  fetch(`https://fakestoreapi.com/products/${id}`)
+    .then((res) => res.json())
+    .then((result) => displayModal(result));
+};
+
+// Display Modal
+const displayModal = (data) => {
+  console.log(data);
+  const detailsContainer = document.getElementById("details-container");
+  detailsContainer.innerHTML = `
+  <h3 class="text-2xl font-semibold">${data.title}</h3>
+  <p class="py-4">${data.description}</p>
+  <p class="py-4"><span class="text-2xl font-semibold">Price: $${data.price}</p>
+  `;
+  document.getElementById("word_modal").showModal();
 };
 
 loadCategoryNav();
