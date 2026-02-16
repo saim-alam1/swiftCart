@@ -24,6 +24,13 @@ if (path.includes("products.html")) {
     ?.classList.add("text-primary", "font-bold");
 }
 
+// Loading All Data By Default
+if (path.includes("products.html")) {
+  fetch("https://fakestoreapi.com/products")
+    .then((res) => res.json())
+    .then((data) => loadAllData(data));
+}
+
 // For mobile view
 if (path.includes("products.html")) {
   document
@@ -103,6 +110,7 @@ const loadCategoryNav = () => {
     .then((result) => loadCategories(result));
 };
 
+// To Load Category Nav Buttons
 const loadCategories = (categories) => {
   // console.log(categories);
 
@@ -111,29 +119,37 @@ const loadCategories = (categories) => {
   productsNav.innerHTML = "";
 
   const allDataBtn = document.createElement("button");
-  allDataBtn.className = "btn btn-primary rounded-full";
+  allDataBtn.className = "btn rounded-full lesson-btn active";
   allDataBtn.textContent = "All";
 
   allDataBtn.addEventListener("click", () => {
+    removeActive();
+    allDataBtn.classList.add("active");
     fetch("https://fakestoreapi.com/products")
       .then((res) => res.json())
-      .then((data) => {
-        loadAllData(data);
-      });
+      .then((data) => loadAllData(data));
   });
 
   productsNav.appendChild(allDataBtn);
 
   categories.forEach((category) => {
-    console.log(category);
-    const navDiv = document.createElement("div");
-    navDiv.innerHTML = `
-    <button onClick="loadCategoryData(\`${category}\`)" class="btn btn-primary rounded-full">
-            ${formatCategory(category)}
-          </button>
-    `;
-    productsNav.appendChild(navDiv);
+    // console.log(category);
+    const btn = document.createElement("button");
+    btn.classList = "btn rounded-full";
+    btn.textContent = formatCategory(category);
+    btn.addEventListener("click", () => {
+      removeActive();
+      btn.classList.add("active", "lesson-btn");
+      loadCategoryData(category);
+    });
+    productsNav.appendChild(btn);
   });
+};
+
+// Removing Class
+const removeActive = () => {
+  const lessonBtns = document.querySelectorAll(".lesson-btn");
+  lessonBtns.forEach((btn) => btn.classList.remove("active"));
 };
 
 // Loading All Data For Product Page

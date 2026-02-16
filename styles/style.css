@@ -6,3 +6,8 @@ html,
 body {
   background-color: #f1f5f9;
 }
+
+.active {
+  color: white;
+  background-color: #422ad5;
+}
