@@ -49,18 +49,19 @@ const loadData = () => {
 // Showed 3 Cards In Home Page Dynamically
 const displayHomeCards = (productsData) => {
   const homeCardsContainer = document.getElementById("home-cards");
+  if (!homeCardsContainer) return;
   homeCardsContainer.innerHTML = "";
 
   const firstThree = productsData.slice(0, 3);
   firstThree.forEach((product) => {
-    console.log(product);
+    // console.log(product);
     const cardDiv = document.createElement("div");
     cardDiv.classList = "card bg-base-100 shadow-sm mt-16";
     cardDiv.innerHTML = `
     <figure>
               <img
                 src=${product.image}
-                class="h-[470px] p-4"
+                class="h-[400px] p-4"
                 alt="Shoes"
               />
             </figure>
@@ -86,7 +87,7 @@ const displayHomeCards = (productsData) => {
                   <i class="fa-regular fa-eye"></i> Details
                 </button>
                 <button class="btn btn-primary">
-                  <i class="fa-light fa-cart-shopping"></i> Add
+                  <i class="fa-solid fa-cart-shopping"></i> Add
                 </button>
               </div>
             </div>
@@ -95,4 +96,90 @@ const displayHomeCards = (productsData) => {
   });
 };
 
+// To Load Category Nav
+const loadCategoryNav = () => {
+  fetch("https://fakestoreapi.com/products/categories")
+    .then((res) => res.json())
+    .then((result) => loadCategories(result));
+};
+
+const loadCategories = (categories) => {
+  console.log(categories);
+
+  const productsNav = document.getElementById("products-nav");
+  if (!productsNav) return;
+  productsNav.innerHTML = "";
+
+  const allDataBtn = document.createElement("button");
+  allDataBtn.className = "btn btn-primary rounded-full";
+  allDataBtn.textContent = "All";
+
+  allDataBtn.addEventListener("click", () => {
+    fetch("https://fakestoreapi.com/products")
+      .then((res) => res.json())
+      .then((data) => {
+        loadAllData(data);
+      });
+  });
+
+  productsNav.appendChild(allDataBtn);
+
+  categories.forEach((category) => {
+    const navDiv = document.createElement("div");
+    navDiv.innerHTML = `
+    <button class="btn btn-primary rounded-full">
+            ${formatCategory(category)}
+          </button>
+    `;
+    productsNav.appendChild(navDiv);
+  });
+};
+
+// Loading All Data For Product Page
+const loadAllData = (allData) => {
+  const productCardContainer = document.getElementById("product-card");
+  productCardContainer.innerHTML = "";
+  allData.forEach((product) => {
+    const cardData = document.createElement("div");
+    cardData.classList = "card bg-base-100 shadow-sm";
+    cardData.innerHTML = `
+    <figure>
+              <img
+                src=${product.image}
+                class="h-[400px] p-4"
+                alt="Shoes"
+              />
+            </figure>
+            <div class="px-5 space-y-4">
+              <!-- Category & Rating -->
+              <div class="flex items-center justify-between mt-5">
+                <p
+                  class="bg-purple-300 text-purple-700 inline-block px-2 text-xs rounded-full"
+                >
+                  ${formatCategory(product.category)}
+                </p>
+
+                <div>
+                  <i class="fa-solid fa-star text-orange-500"></i>
+                  ${product.rating.rate} (${product.rating.count})
+                </div>
+              </div>
+              <h2 class="card-title">${product.title}</h2>
+              <p class="font-bold text-xl">$${product.price}</p>
+
+              <div class="mb-5 grid grid-cols-2 gap-4">
+                <button class="btn">
+                  <i class="fa-regular fa-eye"></i> Details
+                </button>
+                <button class="btn btn-primary">
+                  <i class="fa-solid fa-cart-shopping"></i> Add
+                </button>
+              </div>
+            </div>
+    `;
+    productCardContainer.appendChild(cardData);
+  });
+};
+
+loadCategoryNav();
 loadData();
