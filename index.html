@@ -42,8 +42,8 @@
 
         <div class="navbar-center hidden lg:flex">
           <ul class="menu menu-horizontal px-1">
-            <li><a>Home</a></li>
-            <li><a>Products</a></li>
+            <li><a id="nav-home">Home</a></li>
+            <li><a href="products.html" id="nav-products">Products</a></li>
             <li><a>About</a></li>
             <li><a>Contact</a></li>
           </ul>
@@ -107,8 +107,10 @@
               tabindex="-1"
               class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
             >
-              <li><a>Home</a></li>
-              <li><a>Products</a></li>
+              <li><a id="nav-home-mbl">Home</a></li>
+              <li>
+                <a href="products.html" id="nav-products-mbl">Products</a>
+              </li>
               <li><a>About</a></li>
               <li><a>Contact</a></li>
             </ul>
@@ -373,5 +375,7 @@
         </div>
       </nav>
     </footer>
+
+    <script src="scripts/script.js"></script>
   </body>
 </html>
