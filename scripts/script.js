@@ -104,7 +104,7 @@ const loadCategoryNav = () => {
 };
 
 const loadCategories = (categories) => {
-  console.log(categories);
+  // console.log(categories);
 
   const productsNav = document.getElementById("products-nav");
   if (!productsNav) return;
@@ -125,9 +125,10 @@ const loadCategories = (categories) => {
   productsNav.appendChild(allDataBtn);
 
   categories.forEach((category) => {
+    console.log(category);
     const navDiv = document.createElement("div");
     navDiv.innerHTML = `
-    <button class="btn btn-primary rounded-full">
+    <button onClick="loadCategoryData(\`${category}\`)" class="btn btn-primary rounded-full">
             ${formatCategory(category)}
           </button>
     `;
@@ -179,6 +180,13 @@ const loadAllData = (allData) => {
     `;
     productCardContainer.appendChild(cardData);
   });
+};
+
+// Loading Data Based On Category
+const loadCategoryData = (category) => {
+  fetch(`https://fakestoreapi.com/products/category/${category}`)
+    .then((res) => res.json())
+    .then((res) => loadAllData(res));
 };
 
 loadCategoryNav();
