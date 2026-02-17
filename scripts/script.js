@@ -222,6 +222,12 @@ const displayModal = (data) => {
   <h3 class="text-2xl font-semibold">${data.title}</h3>
   <p class="py-4">${data.description}</p>
   <p class="py-4"><span class="text-2xl font-semibold">Price: $${data.price}</p>
+  <div>
+  <span class="text-2xl font-semibold">Rating:
+     <i class="fa-solid fa-star text-orange-500"></i>
+      ${data.rating.rate} (${data.rating.count})</span>
+  </div>
+  <button class="btn btn-primary my-8">Add To Cart</button>
   `;
   document.getElementById("word_modal").showModal();
 };
