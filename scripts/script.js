@@ -1,31 +1,32 @@
 // Showing Active Nav Routes
-
 const path = window.location.pathname;
-// console.log(path);
 
-// For desktop view
-if (path.includes("index.html") || path === "/") {
+const isHomePage = path === "/" || path.includes("index");
+
+const isProductsPage = path.includes("products");
+
+if (isHomePage) {
   document
     .getElementById("nav-home")
     ?.classList.add("text-primary", "font-bold");
-}
 
-// For mobile view
-if (path.includes("index.html") || path === "/") {
   document
     .getElementById("nav-home-mbl")
     ?.classList.add("text-primary", "font-bold");
 }
 
-// For desktop view
-if (path.includes("products.html")) {
+if (isProductsPage) {
   document
     .getElementById("nav-products")
+    ?.classList.add("text-primary", "font-bold");
+
+  document
+    .getElementById("nav-products-mbl")
     ?.classList.add("text-primary", "font-bold");
 }
 
 // Loading All Data By Default
-if (path.includes("products.html")) {
+if (path.includes("products")) {
   fetch("https://fakestoreapi.com/products")
     .then((res) => res.json())
     .then((data) => loadAllData(data));
